@@ -1,0 +1,27 @@
+{
+  "id": "simpleedit.lint",
+  "name": "Lint",
+  "version": "1.0.0",
+  "api": 1,
+  "description": {
+    "en": "The problems that linters (ESLint, ruff, ShellCheck, Clippy…) find in a file, with their fixes",
+    "fr": "Les problèmes que les linters (ESLint, ruff, ShellCheck, Clippy…) trouvent dans un fichier, avec leurs corrections"
+  },
+  "author": "SimpleEdit",
+  "repository": "simple-edit-app/plugin-lint",
+  "license": "MIT",
+  "command": ["bin/lint"],
+  "contributes": {
+    "linter": {
+      "extensions": [
+        "js", "jsx", "mjs", "cjs", "ts", "tsx", "mts", "cts", "py", "pyi", "rs", "go",
+        "c", "h", "cpp", "cc", "cxx", "hpp", "hh", "hxx", "sh", "bash", "css", "scss", "less",
+        "json", "yaml", "yml", "md", "markdown", "rb", "php", "lua", "kt", "kts", "swift",
+        "sql", "hs", "xml", "java", "cs", "dart", "zig"
+      ]
+    },
+    "panels": [
+      { "id": "settings", "title": { "en": "Linters", "fr": "Linters" }, "location": "settings" }
+    ]
+  }
+}

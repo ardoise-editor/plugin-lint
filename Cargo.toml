@@ -1,0 +1,26 @@
+[package]
+name = "simpleedit-lint"
+version = "1.0.0"
+edition = "2021"
+rust-version = "1.90"
+publish = false
+description = "The Lint plugin of SimpleEdit"
+license = "MIT"
+
+[[bin]]
+name = "lint"
+path = "src/main.rs"
+
+[dependencies]
+simpleedit-plugin = { git = "https://github.com/simple-edit-app/plugin-sdk", tag = "v0.2.0" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+regex = "1"
+tokio = { version = "1", features = ["rt", "process", "io-util", "time", "macros"] }
+
+[dev-dependencies]
+tempfile = "3"
+
+[profile.release]
+strip = true
+lto = true
