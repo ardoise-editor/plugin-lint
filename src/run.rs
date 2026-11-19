@@ -2,7 +2,7 @@
 
 use crate::parse;
 use crate::tools::{Format, Tool};
-use simpleedit_plugin::lint::{apply, fixes_at, Diagnostic, Level};
+use ardoise_plugin::lint::{apply, fixes_at, Diagnostic, Level};
 use std::path::{Path, PathBuf};
 use std::process::Stdio;
 use tokio::io::AsyncWriteExt;

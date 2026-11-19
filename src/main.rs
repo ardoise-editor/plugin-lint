@@ -11,10 +11,10 @@ mod tools;
 
 use std::path::{Path, PathBuf};
 
-use simpleedit_plugin::lint::{FixParams, FixResult, LintParams, LintResult};
-use simpleedit_plugin::protocol::{InitializeParams, Settings as EditorSettings, UiEvent};
-use simpleedit_plugin::ui::*;
-use simpleedit_plugin::{run, Host, Plugin};
+use ardoise_plugin::lint::{FixParams, FixResult, LintParams, LintResult};
+use ardoise_plugin::protocol::{InitializeParams, Settings as EditorSettings, UiEvent};
+use ardoise_plugin::ui::*;
+use ardoise_plugin::{run, Host, Plugin};
 
 use settings::Settings;
 use text::t;
@@ -320,7 +320,7 @@ mod tests {
             text: "{}".into(),
             dirty: false,
             trusted: false,
-            level: simpleedit_plugin::lint::Level::All,
+            level: ardoise_plugin::lint::Level::All,
             source: None,
         };
         let fixed = lint.fix_file(&params);

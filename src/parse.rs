@@ -1,7 +1,7 @@
 //! The reports of the linters, turned into diagnostics.
 
+use ardoise_plugin::lint::{Diagnostic, Edit, Fix, Severity};
 use serde_json::Value;
-use simpleedit_plugin::lint::{Diagnostic, Edit, Fix, Severity};
 use std::path::{Path, PathBuf};
 
 /// The text a report talks about, to turn the columns the tools count in
@@ -62,7 +62,7 @@ impl<'a> Doc<'a> {
 
     /// The (line, byte column) of a byte offset.
     pub fn at_offset(&self, offset: usize) -> (usize, usize) {
-        simpleedit_plugin::lint::position_of(self.text, offset)
+        ardoise_plugin::lint::position_of(self.text, offset)
     }
 
     /// The byte offset of a UTF-16 offset (what JavaScript tools give).
@@ -962,7 +962,7 @@ mod tests {
         assert_eq!(d.severity, Severity::Error);
         assert_eq!(d.code.as_deref(), Some("comma-spacing"));
         assert_eq!(d.fixes[0].title, "Fix 'comma-spacing'");
-        let (fixed, n) = simpleedit_plugin::lint::apply(TEXT, &[&d.fixes[0]]);
+        let (fixed, n) = ardoise_plugin::lint::apply(TEXT, &[&d.fixes[0]]);
         assert_eq!(n, 1);
         assert_eq!(fixed, "const a = [b, c];\nlet é = 1;\n");
         // Columns after a two-byte character still land on it.
@@ -977,7 +977,7 @@ mod tests {
         let text = "x = '😀' ,1;\n";
         let out = r#"[{"messages":[{"ruleId":"comma-spacing","severity":1,"message":"m","line":1,"column":9,"fix":{"range":[8,9],"text":""}}]}]"#;
         let found = eslint(out, text, "ESLint").unwrap();
-        let (fixed, _) = simpleedit_plugin::lint::apply(text, &[&found[0].fixes[0]]);
+        let (fixed, _) = ardoise_plugin::lint::apply(text, &[&found[0].fixes[0]]);
         assert_eq!(fixed, "x = '😀',1;\n");
     }
 
@@ -990,7 +990,7 @@ mod tests {
         assert_eq!(found[0].code.as_deref(), Some("F401"));
         assert_eq!((found[0].line, found[0].col, found[0].end_col), (0, 7, 9));
         assert_eq!(found[0].fixes[0].title, "Remove unused import: `os`");
-        let (fixed, _) = simpleedit_plugin::lint::apply(text, &[&found[0].fixes[0]]);
+        let (fixed, _) = ardoise_plugin::lint::apply(text, &[&found[0].fixes[0]]);
         assert_eq!(fixed, "x = 1\n");
     }
 
@@ -1065,7 +1065,7 @@ mod tests {
         let text = "echo $a\nls\n";
         let s = shellcheck(r#"{"comments":[{"file":"-","line":1,"endLine":1,"column":6,"endColumn":8,"level":"info","code":2086,"message":"Double quote to prevent globbing.","fix":{"replacements":[{"line":1,"endLine":1,"precedence":7,"insertionPoint":"afterEnd","column":6,"endColumn":6,"replacement":"\""},{"line":1,"endLine":1,"precedence":7,"insertionPoint":"beforeStart","column":8,"endColumn":8,"replacement":"\""}]}}]}"#, text, "ShellCheck").unwrap();
         assert_eq!(s[0].code.as_deref(), Some("SC2086"));
-        let (fixed, _) = simpleedit_plugin::lint::apply(text, &[&s[0].fixes[0]]);
+        let (fixed, _) = ardoise_plugin::lint::apply(text, &[&s[0].fixes[0]]);
         assert_eq!(fixed, "echo \"$a\"\nls\n");
         let sl = stylelint(r#"[{"source":"a.css","warnings":[{"line":2,"column":3,"endLine":2,"endColumn":8,"rule":"color-no-invalid-hex","severity":"error","text":"Unexpected invalid hex color (color-no-invalid-hex)"}]}]"#, text, "stylelint").unwrap();
         assert_eq!(sl[0].message, "Unexpected invalid hex color");
@@ -1106,7 +1106,7 @@ mod tests {
         let found = clippy(line, text, "clippy", Path::new("/p/src/main.rs"));
         assert_eq!(found.len(), 1);
         assert_eq!(found[0].code.as_deref(), Some("clippy::len_zero"));
-        let (fixed, _) = simpleedit_plugin::lint::apply(text, &[&found[0].fixes[0]]);
+        let (fixed, _) = ardoise_plugin::lint::apply(text, &[&found[0].fixes[0]]);
         assert_eq!(fixed, "fn main() {\n    let x = vec![1].is_empty();\n}\n");
         assert!(clippy(line, text, "clippy", Path::new("/p/src/other.rs")).is_empty());
         // In a workspace, paths are from its root: not the root package's file.
