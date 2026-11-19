@@ -1,14 +1,14 @@
 {
   "id": "simpleedit.lint",
   "name": "Lint",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "api": 1,
   "description": {
     "en": "The problems that linters (ESLint, ruff, ShellCheck, Clippy…) find in a file, with their fixes",
     "fr": "Les problèmes que les linters (ESLint, ruff, ShellCheck, Clippy…) trouvent dans un fichier, avec leurs corrections"
   },
-  "author": "SimpleEdit",
-  "repository": "simple-edit-app/plugin-lint",
+  "author": "Ardoise Editor",
+  "repository": "ardoise-editor/plugin-lint",
   "license": "MIT",
   "command": ["bin/lint"],
   "contributes": {

@@ -1,4 +1,4 @@
-//! The Lint plugin of SimpleEdit: the problems that linters (ESLint, ruff,
+//! The Lint plugin of Ardoise: the problems that linters (ESLint, ruff,
 //! ShellCheck, Clippy…) find in a file, with their fixes. The editor shows
 //! them, with those of its language servers.
 
