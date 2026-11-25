@@ -1,7 +1,7 @@
 {
   "id": "ardoise.lint",
   "name": "Lint",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "api": 1,
   "description": {
     "en": "The problems that linters (ESLint, ruff, ShellCheck, Clippy…) find in a file, with their fixes",
